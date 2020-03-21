@@ -4,7 +4,7 @@ const jsonUpdate = require('json-update');
 
 let encrypted_mesage = answer.cifrado;
 let numero_casas = answer.numero_casas;
-let decrypted_message;
+let decrypted_message = "";
 
 //loop to get every letter in the string given
 for (let letter in encrypted_mesage) {
@@ -13,7 +13,7 @@ for (let letter in encrypted_mesage) {
     let decrypting_letter = encrypted_mesage.charCodeAt(letter);
 
     //checking if our generated Unicode is between 97 and 122, that corresponds to the alplhabet
-    if (decrypting_letter >= 97 && decrypting_letter <=122 ){
+    if (decrypting_letter >= 97 && decrypting_letter <= 122) {
 
         //now we subtract the Unicode by the numero_casas given 
         decrypting_letter = decrypting_letter - numero_casas;
@@ -31,14 +31,15 @@ for (let letter in encrypted_mesage) {
 let resumo_criptografico = sha1(decrypted_message);
 
 //updating json at decifrado and resumo_criptografico fields
-jsonUpdate.update('./app/answer.json',{decifrado:decrypted_message,resumo_criptografico:resumo_criptografico})
-.then( () => { 
-    console.log("json file updated!"); 
-  });
-  ;
+jsonUpdate.update('./app/answer.json', { decifrado: decrypted_message, resumo_criptografico: resumo_criptografico })
+    .then(() => {
+        console.log("json file updated!");
+    })
+    .then(() => {
+        //logs the answer.json file updated
+        console.log(answer);
+    });
 
 
 
 //https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=425dea77c911d0eb76a0384e7b5989b912b3a9e4
-
-//97 a 122
