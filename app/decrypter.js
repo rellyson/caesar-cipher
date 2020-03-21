@@ -1,5 +1,6 @@
 const sha1 = require('sha1');
 const answer = require('./answer.json');
+const jsonUpdate = require('json-update');
 
 let encrypted_mesage = answer.cifrado;
 let numero_casas = answer.numero_casas;
@@ -25,6 +26,17 @@ for (let letter in encrypted_mesage) {
     // generating a new string with our decrypted message
     decrypted_message += String.fromCharCode(decrypting_letter);
 }
+
+//generating a sha1 hash for decrypted message
+let resumo_criptografico = sha1(decrypted_message);
+
+//updating json at decifrado and resumo_criptografico fields
+jsonUpdate.update('./app/answer.json',{decifrado:decrypted_message,resumo_criptografico:resumo_criptografico})
+.then( () => { 
+    console.log("json file updated!"); 
+  });
+  ;
+
 
 
 //https://api.codenation.dev/v1/challenge/dev-ps/generate-data?token=425dea77c911d0eb76a0384e7b5989b912b3a9e4
