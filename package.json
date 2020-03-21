@@ -1,0 +1,17 @@
+{
+  "name": "caesar-cipher",
+  "version": "1.0.0",
+  "description": "caesar cipher decryption application",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js"
+  },
+  "keywords": [],
+  "author": "Rellyson Silva",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}
