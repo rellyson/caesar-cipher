@@ -3,6 +3,7 @@ const answer = require('./answer.json');
 const jsonUpdate = require('json-update');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+const fs = require('fs');
 
 let encrypted_mesage = answer.cifrado;
 let numero_casas = answer.numero_casas;
@@ -39,15 +40,15 @@ jsonUpdate.update('./app/answer.json', { decifrado: decrypted_message, resumo_cr
     }
 );
 
-//crating new form
+//creating new form
 const form = new FormData();
+const buffer = fs.readFileSync('./app/answer.json');
 
-//append every field from json
-for (let item in answer) {
-
-    form.append('answer',item,answer[item]);
-}
-
+form.append('answer',buffer, {
+    contentType: 'text/plain',
+    name: 'answer',
+    filename: 'answer.json',
+  });
 
 //http post to server passing Form.data 
 fetch('https://api.codenation.dev/v1/challenge/dev-ps/submit-solution?token=425dea77c911d0eb76a0384e7b5989b912b3a9e4',
