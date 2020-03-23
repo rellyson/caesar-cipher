@@ -3,7 +3,6 @@ const answer = require('./answer.json');
 const jsonUpdate = require('json-update');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-const fs = require('fs');
 
 let encrypted_mesage = answer.cifrado;
 let numero_casas = answer.numero_casas;
@@ -34,7 +33,7 @@ for (let letter in encrypted_mesage) {
 let resumo_criptografico = sha1(decrypted_message);
 
 //updating json at decifrado and resumo_criptografico fields
-jsonUpdate.update('./app/answer.json', { decifrado: decrypted_message, resumo_criptografico: resumo_criptografico })
+jsonUpdate.update('./app/answer.json', { token: process.env.TOKEN, decifrado: decrypted_message, resumo_criptografico: resumo_criptografico })
     .then(() => {
         console.log("done!");
     }
@@ -51,7 +50,7 @@ form.append('answer',buffer, {
   });
 
 //http post to server passing Form.data 
-fetch('https://api.codenation.dev/v1/challenge/dev-ps/submit-solution?token=425dea77c911d0eb76a0384e7b5989b912b3a9e4',
+fetch(`https://api.codenation.dev/v1/challenge/dev-ps/submit-solution?token=${process.env.TOKEN }`,
      {method: 'POST', body: form})
 	.then(res => res.json())
 	.then(json => console.log(json));
